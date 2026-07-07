@@ -106,7 +106,7 @@ return [
             'tag'    => '',
         ],
         [
-            'period' => '3 of 5 years',
+            'period' => '3 of 5 years (dropped out)',
             'title'  => 'M.Sc. Software Systems (Integrated)',
             'org'    => 'Kongu Engineering College',
             'place'  => 'Perundurai, Erode',
