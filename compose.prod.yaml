@@ -1,0 +1,45 @@
+# ------------------------------------------------------------------
+# Production TLS overlay — Let's Encrypt via Traefik.
+# Requires SITE_DOMAIN + ACME_EMAIL in .env and ports 80/443 free.
+#
+#   docker compose -f compose.yaml -f compose.prod.yaml up -d --build
+# ------------------------------------------------------------------
+
+services:
+  traefik:
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.constraints=Label(`traefik.constraint`,`surethan-portfolio`)
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      # HTTP -> HTTPS at the edge
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL:?set ACME_EMAIL in .env}
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+      - --log.level=WARN
+      - --api.dashboard=false
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+
+  web:
+    labels:
+      - traefik.enable=true
+      - traefik.constraint=surethan-portfolio
+      - traefik.http.routers.sn-portfolio.rule=Host(`${SITE_DOMAIN:?set SITE_DOMAIN in .env}`)
+      - traefik.http.routers.sn-portfolio.entrypoints=websecure
+      - traefik.http.routers.sn-portfolio.tls=true
+      - traefik.http.routers.sn-portfolio.tls.certresolver=le
+      - traefik.http.services.sn-portfolio.loadbalancer.server.port=80
+      - traefik.http.middlewares.sn-portfolio-headers.headers.stsSeconds=31536000
+      - traefik.http.middlewares.sn-portfolio-headers.headers.stsIncludeSubdomains=true
+      - traefik.http.routers.sn-portfolio.middlewares=sn-portfolio-headers
+
+volumes:
+  letsencrypt:

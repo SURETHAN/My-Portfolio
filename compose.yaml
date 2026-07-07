@@ -1,0 +1,55 @@
+# ------------------------------------------------------------------
+# Surethan S portfolio — one-command stack
+#
+#   docker compose up -d --build      # build + start (Traefik + site)
+#   docker compose down               # stop everything
+#
+# Local default: http://localhost:${HTTP_PORT:-80}
+# Production TLS: add the overlay ->
+#   docker compose -f compose.yaml -f compose.prod.yaml up -d --build
+#
+# The docker provider is constrained to this project's containers, so
+# this Traefik coexists safely with any other Traefik on the host.
+# ------------------------------------------------------------------
+
+name: surethan-portfolio
+
+services:
+  traefik:
+    image: traefik:v3.1
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.constraints=Label(`traefik.constraint`,`surethan-portfolio`)
+      - --entrypoints.web.address=:80
+      - --log.level=WARN
+      - --accesslog=false
+      - --api.dashboard=false
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - web
+
+  web:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - portfolio-var:/var/www/html/var
+    labels:
+      - traefik.enable=true
+      - traefik.constraint=surethan-portfolio
+      # Catch-all locally: reachable via localhost, LAN IP, or an upstream
+      # proxy that forwards any Host. The TLS overlay pins a strict Host rule.
+      - traefik.http.routers.sn-portfolio.rule=PathPrefix(`/`)
+      - traefik.http.routers.sn-portfolio.entrypoints=web
+      - traefik.http.services.sn-portfolio.loadbalancer.server.port=80
+      # Extra headers at the edge (PHP already sends the full set for HTML)
+      - traefik.http.middlewares.sn-portfolio-headers.headers.stsSeconds=31536000
+      - traefik.http.middlewares.sn-portfolio-headers.headers.stsIncludeSubdomains=true
+      - traefik.http.routers.sn-portfolio.middlewares=sn-portfolio-headers
+
+volumes:
+  portfolio-var:

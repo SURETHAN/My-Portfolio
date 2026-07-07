@@ -1,0 +1,3 @@
+# Application source — never web-servable, even if someone points the
+# docroot at the repository root instead of public/.
+Require all denied

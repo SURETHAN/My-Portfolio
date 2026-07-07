@@ -1,0 +1,33 @@
+# ------------------------------------------------------------------
+# Surethan S portfolio — Apache hardening (docroot = public/)
+# Header security for the HTML page itself is sent by PHP; these rules
+# cover static assets and general server hygiene.
+# ------------------------------------------------------------------
+
+Options -Indexes -MultiViews
+ServerSignature Off
+
+# Block dotfiles and backup/source leftovers
+<FilesMatch "^\.|\.(bak|swp|save|orig|dist|log|sh|sql)$">
+  Require all denied
+</FilesMatch>
+
+# Static assets: long cache (URLs are ?v= cache-busted)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|mjs|woff2|webp|png|svg|jpg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+    Header set X-Content-Type-Options "nosniff"
+  </FilesMatch>
+</IfModule>
+
+# Correct MIME for woff2 on older Apache
+AddType font/woff2 .woff2
+AddType image/webp .webp
+
+# Front controller not needed (single page), but route stray paths home
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ /index.php [L]
+</IfModule>

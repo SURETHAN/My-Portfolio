@@ -1,0 +1,4 @@
+*
+!app/
+!public/
+public/assets/**/.DS_Store
