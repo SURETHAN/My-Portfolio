@@ -17,12 +17,17 @@ const SITE_DESC   = 'Product developer at Selfmade Ninja Academy, Bengaluru. Shi
 const SITE_URL    = 'https://surethan.zeal.ninja';
 const CONTACT_TO  = 'surethan37@gmail.com';
 
+/* Envelope/header sender — must match the Gmail account msmtp authenticates as */
+const CONTACT_FROM = 'surethan37@gmail.com';
+
 /**
  * How the contact form delivers messages:
- *  - 'mail' : PHP mail() (needs a configured MTA / shared-hosting sendmail)
- *  - 'log'  : append to var/messages.log (safe default everywhere)
+ *  - 'mail' : PHP mail() → msmtp → Gmail SMTP (see Dockerfile; needs $SMTP_PASS)
+ *  - 'log'  : append to var/messages.log only (safe default everywhere)
+ * Note: every message is ALWAYS written to the log as a durable backup,
+ * regardless of this setting — see public/contact.php.
  */
-const CONTACT_TRANSPORT = 'log';
+const CONTACT_TRANSPORT = 'mail';
 
 /* Rate limit: max submissions per IP per window (seconds) */
 const RATE_LIMIT_MAX    = 5;

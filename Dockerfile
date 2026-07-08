@@ -34,6 +34,32 @@ RUN { \
       echo 'max_execution_time = 15'; \
     } > /usr/local/etc/php/conf.d/hardening.ini
 
+# Mail delivery: route PHP mail() through Gmail SMTP via msmtp.
+# The Gmail App Password is injected at runtime as $SMTP_PASS — never baked in.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends msmtp msmtp-mta ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && printf '%s\n' \
+      'defaults' \
+      'auth on' \
+      'tls on' \
+      'tls_starttls on' \
+      'tls_trust_file /etc/ssl/certs/ca-certificates.crt' \
+      'logfile /dev/stderr' \
+      '' \
+      'account gmail' \
+      'host smtp.gmail.com' \
+      'port 587' \
+      'from surethan37@gmail.com' \
+      'user surethan37@gmail.com' \
+      'passwordeval "printenv SMTP_PASS"' \
+      '' \
+      'account default : gmail' \
+      > /etc/msmtprc \
+    && chmod 644 /etc/msmtprc \
+    && echo 'sendmail_path = "/usr/bin/msmtp -t -i"' \
+      > /usr/local/etc/php/conf.d/mail.ini
+
 COPY app/ /var/www/html/app/
 COPY public/ /var/www/html/public/
 

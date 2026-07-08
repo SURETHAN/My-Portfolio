@@ -86,34 +86,41 @@ if (text_len($message) < 10) {
 }
 
 /* ---- Delivery ---- */
-$delivered = false;
+/* Always keep a durable copy in the log so a mail outage never loses a message. */
+if (!is_dir(VAR_DIR)) {
+    mkdir(VAR_DIR, 0750, true);
+}
+$logged = (bool) file_put_contents(
+    VAR_DIR . '/messages.log',
+    json_encode([
+        'ts'      => gmdate('c'),
+        'name'    => $name,
+        'email'   => $email,
+        'message' => $message,
+    ], JSON_UNESCAPED_UNICODE) . "\n",
+    FILE_APPEND | LOCK_EX
+);
 
+$mailed = true;
 if (CONTACT_TRANSPORT === 'mail') {
     $subject = '[Portfolio] Message from ' . $name;
     $body    = "Name: {$name}\nEmail: {$email}\nTime: " . gmdate('c') . "\nIP hash: "
         . substr(hash_hmac('sha256', client_ip(), app_secret()), 0, 16)
         . "\n\n" . $message . "\n";
     $headers = [
-        'From: ' . SITE_NAME . ' <no-reply@' . (explode(':', $host)[0] ?: 'localhost') . '>',
+        'From: ' . SITE_NAME . ' <' . CONTACT_FROM . '>',
         'Reply-To: ' . $email, // validated above; sanitize_line stripped CR/LF
         'X-Mailer: portfolio-contact',
         'Content-Type: text/plain; charset=UTF-8',
     ];
-    $delivered = @mail(CONTACT_TO, $subject, $body, implode("\r\n", $headers));
-} else {
-    if (!is_dir(VAR_DIR)) {
-        mkdir(VAR_DIR, 0750, true);
+    $mailed = @mail(CONTACT_TO, $subject, $body, implode("\r\n", $headers));
+    if (!$mailed) {
+        error_log('[contact] mail() delivery failed for message from ' . $email);
     }
-    $line = json_encode([
-        'ts'      => gmdate('c'),
-        'name'    => $name,
-        'email'   => $email,
-        'message' => $message,
-    ], JSON_UNESCAPED_UNICODE) . "\n";
-    $delivered = (bool) file_put_contents(VAR_DIR . '/messages.log', $line, FILE_APPEND | LOCK_EX);
 }
 
-if (!$delivered) {
+/* Fail only if we could neither email nor log — the message would be lost. */
+if (!$logged && !$mailed) {
     respond(false, 'Could not send right now — email me directly instead.', 500);
 }
 

@@ -36,6 +36,9 @@ services:
   web:
     build: .
     restart: unless-stopped
+    environment:
+      # Gmail App Password for contact-form email delivery (see .env / Dockerfile)
+      - SMTP_PASS=${SMTP_PASS:-}
     volumes:
       - portfolio-var:/var/www/html/var
     labels:
