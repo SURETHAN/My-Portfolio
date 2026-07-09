@@ -24,12 +24,13 @@ ServerSignature Off
 AddType font/woff2 .woff2
 AddType image/webp .webp
 
-# Front controller not needed (single page), but route stray paths home
+# Front controller not needed (single page); stray paths 301 home so
+# search engines see exactly one canonical URL instead of duplicates
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # Private customer-feedback form (clean URL)
   RewriteRule ^customer-feedback/?$ /customer-feedback.php [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^ /index.php [L]
+  RewriteRule ^ / [R=301,L]
 </IfModule>

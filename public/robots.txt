@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /customer-feedback
+Disallow: /customer-feedback.php
+Disallow: /contact.php
+
+Sitemap: https://surethan.zeal.ninja/sitemap.xml

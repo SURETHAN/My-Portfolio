@@ -58,6 +58,7 @@
     '@context' => 'https://schema.org',
     '@type'    => 'Person',
     'name'     => SITE_NAME,
+    'alternateName' => ['Surethan', 'Surethan S'],
     'jobTitle' => 'Product Developer',
     'worksFor' => ['@type' => 'Organization', 'name' => $identity['company']],
     'email'    => 'mailto:' . $identity['email'],
