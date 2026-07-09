@@ -4,7 +4,7 @@
     <div class="sec-head">
       <div>
         <p class="mono-label sec-label" data-reveal>
-          <span class="accent">001</span><span class="rule" aria-hidden="true"></span>Story
+          Story<span class="rule" aria-hidden="true"></span>
         </p>
         <h2 class="sec-title"><?= reveal_words($about['heading']) ?></h2>
       </div>
@@ -24,8 +24,7 @@
           <div class="portrait-grade" aria-hidden="true"></div>
           <div class="portrait-tint" aria-hidden="true"></div>
           <figcaption class="portrait-cap">
-            <span class="c1"><?= e($identity['name']) ?> — early hours</span>
-            <span class="c2">EXIF · 06:1X AM</span>
+            <span class="c1"><?= e($identity['name']) ?> — nature lover</span>
           </figcaption>
         </figure>
         <div class="fact-chip glass" data-reveal>
@@ -41,9 +40,9 @@
           <?php endforeach; ?>
         </div>
 
-        <dl class="stats">
+        <dl class="stats" data-reveal>
           <?php foreach ($about['stats'] as $stat): ?>
-            <div class="stat" data-reveal>
+            <div class="stat">
               <dd class="stat-num">
                 <span data-counter="<?= e((string) $stat['value']) ?>" data-suffix="<?= e($stat['suffix']) ?>"><?= e((string) $stat['value'] . $stat['suffix']) ?></span>
               </dd>

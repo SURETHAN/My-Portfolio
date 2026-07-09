@@ -4,12 +4,12 @@
     <div class="sec-head">
       <div>
         <p class="mono-label sec-label" data-reveal>
-          <span class="accent">002</span><span class="rule" aria-hidden="true"></span>Stack
+          Capabilities<span class="rule" aria-hidden="true"></span>
         </p>
-        <h2 class="sec-title"><?= reveal_words('Tools that earn their place.') ?></h2>
+        <h2 class="sec-title"><?= reveal_words('Capabilities proven in production.') ?></h2>
       </div>
       <p class="sec-aside" data-reveal>
-        Grouped by what they're for — not a wall of logos. The first two groups are where most of the production mileage is.
+        Organised by engineering discipline — every item here has shipped to production. Nothing aspirational.
       </p>
     </div>
 
@@ -17,11 +17,10 @@
       <?php foreach ($skillGroups as $group): ?>
         <div class="tilt" data-tilt data-reveal>
           <article class="skill-card">
-            <div class="sc-top">
-              <span class="sc-index">GRP<span class="accent">/<?= e($group['index']) ?></span></span>
+            <div class="sc-head-row">
+              <h3 class="sc-title"><?= e($group['title']) ?></h3>
               <?php if ($group['featured']): ?><span class="sc-badge">Core</span><?php endif; ?>
             </div>
-            <h3 class="sc-title"><?= e($group['title']) ?></h3>
             <p class="sc-blurb"><?= e($group['blurb']) ?></p>
             <ul class="chiplist">
               <?php foreach ($group['items'] as $item): ?>

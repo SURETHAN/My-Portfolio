@@ -62,6 +62,7 @@ RUN apt-get update \
 
 COPY app/ /var/www/html/app/
 COPY public/ /var/www/html/public/
+COPY content/ /var/www/html/content/
 
 # Writable state dir (secret key, rate-limit counters, message log)
 RUN mkdir -p /var/www/html/var \

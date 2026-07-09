@@ -1,0 +1,34 @@
+[
+  {
+    "period": "Schooling",
+    "title": "The starting point",
+    "org": "URC Palaniammal Matric Hr. Sec. School",
+    "place": "Erode, Tamil Nadu",
+    "body": "Finished schooling in Erode — where the curiosity for making computers do real work began.",
+    "tag": ""
+  },
+  {
+    "period": "3 of 5 years (dropped out)",
+    "title": "M.Sc. Software Systems (Integrated)",
+    "org": "Kongu Engineering College",
+    "place": "Perundurai, Erode",
+    "body": "Three years into the 5-year integrated programme, the pull of building real products outgrew the classroom.",
+    "tag": ""
+  },
+  {
+    "period": "The leap",
+    "title": "Left to build full-time",
+    "org": "Student → Product Developer",
+    "place": "",
+    "body": "Walked away from the degree to ship software with real users — a bet that paid off within months.",
+    "tag": "INFLECTION"
+  },
+  {
+    "period": "2025 — Present",
+    "title": "Product Developer",
+    "org": "Selfmade Ninja Academy",
+    "place": "Bengaluru",
+    "body": "Became the largest contributor to the academy's core ERP app (136 of 230 commits), sole author of the Syllabi AI pipeline, and builder of the AI voice lead-qualification system — all live in production.",
+    "tag": "CURRENT"
+  }
+]

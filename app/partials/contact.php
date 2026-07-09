@@ -4,7 +4,7 @@
     <div class="sec-head">
       <div>
         <p class="mono-label sec-label" data-reveal>
-          <span class="accent">006</span><span class="rule" aria-hidden="true"></span>Contact
+          Contact<span class="rule" aria-hidden="true"></span>
         </p>
       </div>
     </div>

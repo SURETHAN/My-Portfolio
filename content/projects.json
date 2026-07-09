@@ -1,0 +1,133 @@
+[
+  {
+    "id": "syllabi-ai",
+    "index": "001",
+    "name": "Syllabi AI",
+    "kicker": "Syllabus PDF → living learning platform",
+    "summary": "An admin drops in a university syllabus PDF; five specialized LLM agents parse it into a structured hierarchy — campus to department to course to unit — and every student can generate an AI lesson from any unit in one click.",
+    "role": "Sole author, end-to-end — backend AI pipeline + web frontend. ~60 commits, +10k lines.",
+    "impact": [
+      "Parses multi-hundred-page syllabi into structured courses & units in minutes",
+      "Serves the academy's entire student base at labs.selfmade.ninja",
+      "SHA-256 file-hash dedup returns cached parses — tokens are never burned twice",
+      "OCR fallback (pytesseract + pdf2image) rescues scanned PDFs",
+      "Auto-detects link-index PDFs and switches to flat mode — fetches every Google Drive doc asynchronously",
+      "Error recovery never destroys old data until a re-parse succeeds"
+    ],
+    "tech": ["Python 3.12", "OpenAI Agents SDK", "Pydantic", "MongoDB", "RabbitMQ", "pdfplumber", "PyMuPDF", "aiohttp", "PHP", "CoreUI"],
+    "liveLabel": "labs.selfmade.ninja/syllabus",
+    "liveUrl": "https://labs.selfmade.ninja/syllabus",
+    "flagship": true,
+    "architecture": [
+      { "label": "INGEST",    "detail": "PDF upload · mime/size guard · SHA-256 dedup → HTTP 409" },
+      { "label": "EXTRACT",   "detail": "pdfplumber → OCR fallback · hyperlink harvest via PyMuPDF" },
+      { "label": "AGENTS ×5", "detail": "Syllabus · FlatSyllabus · Unit · WebUnit · Lab — Pydantic contracts" },
+      { "label": "NORMALIZE", "detail": "1NF tree → per-university MongoDB collections · deterministic IDs" },
+      { "label": "SERVE",     "detail": "RabbitMQ daemon · bell notifications · LearnAI lesson deep-links" }
+    ],
+    "span": ""
+  },
+  {
+    "id": "ai-voice",
+    "index": "002",
+    "name": "AI Voice Lead Qualification",
+    "kicker": "Every new lead, called by AI within seconds",
+    "summary": "A new sales lead lands in the CRM and an AI voice agent calls them back within seconds, interviews them in Tamil-English, extracts a structured qualification profile from the transcript, routes hot leads to humans and schedules everyone else — autonomously.",
+    "role": "Feature author, end-to-end. ~15 feature commits + 67 automated tests. Python / Frappe.",
+    "impact": [
+      "Qualifies leads as Hot / Warm / Cold / Callback with 11 structured profile fields",
+      "Trunk-capacity guard defers overflow calls instead of burning SIP rejects — deadlock-proof by design",
+      "Polling state machine survives vocabulary drift, dropped calls and full outages",
+      "Retries land inside configured calling windows — a 10 p.m. signup gets called 10:30 a.m. next day",
+      "Writes via low-level field updates so it can never trigger CRM validations or Meta CAPI side effects",
+      "67 tests prove the AI can never break the human sales workflow"
+    ],
+    "tech": ["Python", "Frappe", "OpenAI (gpt-4o-mini, temp 0)", "Zenvoice SIP", "JSON mode", "Cron state machine"],
+    "liveLabel": "crm.selfmade.ninja · internal",
+    "liveUrl": "",
+    "flagship": true,
+    "architecture": [
+      { "label": "TRIGGER", "detail": "after_insert hook — hardened so failure can't roll back lead creation" },
+      { "label": "DIAL",    "detail": "Zenvoice client · dual auth · trunk-capacity guard + stale-call cutoff" },
+      { "label": "POLL",    "detail": "5-min cron state machine · status vocabulary normalization" },
+      { "label": "EXTRACT", "detail": "gpt-4o-mini at temperature 0 · noise-tolerant multilingual prompt · per-question Q&A rows" },
+      { "label": "ROUTE",   "detail": "Hot → human sales · callbacks honor requested slots · retry caps" }
+    ],
+    "span": ""
+  },
+  {
+    "id": "lead-funnel",
+    "index": "003",
+    "name": "Lead Funnel + Meta CAPI",
+    "kicker": "Top of the paid-acquisition funnel",
+    "summary": "Anonymous multi-step eligibility quiz feeding the CRM — with Meta Pixel + Conversions API attribution, browser/server event dedup, ROAS values and full UTM capture. The leads it qualifies are the ones the AI voice agent calls.",
+    "role": "Sole author, frontend + backend.",
+    "impact": [
+      "~1,600 lines of dependency-free vanilla JS/CSS quiz engine",
+      "fbc/fbp advanced matching + event-ID dedup between Pixel and CAPI",
+      "Host-based domain router serves multiple marketing domains from one Frappe site"
+    ],
+    "tech": ["Vanilla JS", "Frappe", "Meta Pixel", "Conversions API", "Microsoft Clarity"],
+    "liveLabel": "leads.selfmade.ninja",
+    "liveUrl": "https://leads.selfmade.ninja",
+    "flagship": false,
+    "architecture": [],
+    "span": "wide"
+  },
+  {
+    "id": "certificates",
+    "index": "004",
+    "name": "Certificate Platform",
+    "kicker": "Template-driven credential rendering",
+    "summary": "Visual position picker with rotation, alignment and word-wrap for laying out dynamic fields on certificate artwork — a clean v3 renderer built alongside the untouched legacy system.",
+    "role": "Primary author. Two ~300-line classes, 100% authorship.",
+    "impact": [
+      "Dummy-data preview before issuing",
+      "Campaign-aware delivery emails",
+      "Workshop certificates keyed by registration in S3"
+    ],
+    "tech": ["Python", "Frappe", "WeasyPrint", "S3"],
+    "liveLabel": "",
+    "liveUrl": "",
+    "flagship": false,
+    "architecture": [],
+    "span": ""
+  },
+  {
+    "id": "campaigns",
+    "index": "005",
+    "name": "Campaigns, Payments & Discord",
+    "kicker": "Workshop commerce, end to end",
+    "summary": "Ported the recorded-workshop site from standalone Flask into the Frappe monolith: registration → Cashfree order → webhook → auto Sales Invoice → academy access. Discord roles granted automatically on payment.",
+    "role": "Sole/primary author.",
+    "impact": [
+      "Payment lifecycle hooks with idempotent Discord role seeding",
+      "Program API v3 — 13 whitelisted endpoints with server-side filter/search/pagination",
+      "KYC hardening (replay, race, PII) on a 2,000-line Cashfree module"
+    ],
+    "tech": ["Python", "Frappe", "Cashfree", "Discord REST", "Webhooks"],
+    "liveLabel": "",
+    "liveUrl": "",
+    "flagship": false,
+    "architecture": [],
+    "span": ""
+  },
+  {
+    "id": "agents-mcp",
+    "index": "006",
+    "name": "AI Agents, n8n & MCP",
+    "kicker": "Assistants that operate real systems",
+    "summary": "Beyond the flagships: automation agents built with n8n and the OpenAI Agents SDK, and MCP (Model Context Protocol) servers that let LLM assistants drive real infrastructure. [ADD 1–2 CONCRETE n8n / MCP EXAMPLES]",
+    "role": "Builder.",
+    "impact": [
+      "Syllabi AI (001) is the largest Agents-SDK system in production",
+      "MCP servers exposing internal tooling to LLM assistants"
+    ],
+    "tech": ["n8n", "OpenAI Agents SDK", "MCP", "Python", "TypeScript"],
+    "liveLabel": "",
+    "liveUrl": "",
+    "flagship": false,
+    "architecture": [],
+    "span": "wide"
+  }
+]

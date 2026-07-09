@@ -41,6 +41,8 @@ services:
       - SMTP_PASS=${SMTP_PASS:-}
     volumes:
       - portfolio-var:/var/www/html/var
+      # Editable content: change a JSON file, refresh the browser — no rebuild
+      - ./content:/var/www/html/content:ro
     labels:
       - traefik.enable=true
       - traefik.constraint=surethan-portfolio

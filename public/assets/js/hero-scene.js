@@ -47,7 +47,7 @@ export function mount(holder, { dark }) {
     opacity: 0,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
-    color: new THREE.Color(dark ? "#6ba3ff" : "#2563eb"),
+    color: new THREE.Color(dark ? "#6bffa8" : "#16a34a"),
   });
   const points = new THREE.Points(geometry, material);
   points.frustumCulled = false;
@@ -102,7 +102,7 @@ export function mount(holder, { dark }) {
   return {
     setTheme(nextDark) {
       isDark = nextDark;
-      material.color.set(nextDark ? "#6ba3ff" : "#2563eb");
+      material.color.set(nextDark ? "#6bffa8" : "#16a34a");
     },
     pause() { paused = true; clock.stop(); },
     resume() { paused = false; clock.start(); },

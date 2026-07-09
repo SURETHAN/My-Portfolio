@@ -39,3 +39,6 @@ const FORM_MAX_SECONDS = 7200;
 
 /* Writable state directory (rate-limit counters, secret key, message log) */
 define('VAR_DIR', dirname(__DIR__) . '/var');
+
+/* Editable site content (skills, timeline, projects, stats — plain JSON) */
+define('CONTENT_DIR', dirname(__DIR__) . '/content');

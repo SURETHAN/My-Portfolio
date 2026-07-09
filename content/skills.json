@@ -1,0 +1,107 @@
+{
+  "groups": [
+    {
+      "title": "AI Engineering",
+      "blurb": "I engineer prompt systems and multi-agent orchestration for production — prompts that hold up under noisy real-world input, custom Claude Code skills, and AI wired to the tools it needs to deliver real work.",
+      "items": [
+        "Prompt engineering",
+        "Deterministic structured extraction",
+        "Claude Code — custom skills",
+        "Claude Agent SDK",
+        "Production-grade AI workflows",
+        "MCP servers & tool integration",
+        "Chrome DevTools MCP (remote + local)",
+        "OpenAI API & Agents SDK",
+        "Pydantic-typed outputs",
+        "n8n agent workflows"
+      ],
+      "featured": true
+    },
+    {
+      "title": "Backend & Platform Engineering",
+      "blurb": "I engineer the production Python platform an entire academy runs on — Frappe/ERPNext at the core, built for correctness and uptime.",
+      "items": [
+        "Python (async pipelines)",
+        "Frappe / ERPNext v15",
+        "DocTypes & lifecycle hooks",
+        "Whitelisted APIs",
+        "Background jobs & schedulers",
+        "Patches & fixtures"
+      ],
+      "featured": true
+    },
+    {
+      "title": "Data & Infrastructure Engineering",
+      "blurb": "I architect the message queues, data stores and container infrastructure that keep long-running AI workloads reliable, observable and recoverable.",
+      "items": [
+        "MongoDB",
+        "MariaDB / MySQL",
+        "Redis",
+        "RabbitMQ (AMQP)",
+        "Docker + sysbox-runc",
+        "S3 / MinIO",
+        "GitLab CI/CD",
+        "Traefik"
+      ],
+      "featured": false
+    },
+    {
+      "title": "Frontend Engineering & Conversion",
+      "blurb": "I build dependency-free interfaces, conversion funnels and dashboards — instrumented end-to-end so every decision is backed by data.",
+      "items": [
+        "JavaScript (vanilla)",
+        "jQuery / CoreUI",
+        "PHP (custom MVC)",
+        "SASS / Grunt",
+        "Microsoft Clarity"
+      ],
+      "featured": false
+    },
+    {
+      "title": "Systems Integration & Growth",
+      "blurb": "I integrate payments, telephony and advertising platforms into one coherent system — with event deduplication and attribution ad platforms verify.",
+      "items": [
+        "Meta Pixel + Conversions API",
+        "Event dedup & advanced matching",
+        "Cashfree / PhonePe payments",
+        "Zenvoice SIP telephony",
+        "Discord REST API",
+        "Telegram integrations"
+      ],
+      "featured": false
+    },
+    {
+      "title": "Document Intelligence",
+      "blurb": "I convert unstructured documents into validated, structured data — and render data back into production-grade, pixel-accurate documents.",
+      "items": [
+        "pdfplumber",
+        "PyMuPDF",
+        "OCR — pytesseract + pdf2image",
+        "WeasyPrint rendering"
+      ],
+      "featured": false
+    }
+  ],
+  "marquee": [
+    "Python",
+    "Frappe",
+    "ERPNext",
+    "OpenAI Agents SDK",
+    "MCP",
+    "n8n",
+    "MongoDB",
+    "Redis",
+    "RabbitMQ",
+    "Docker",
+    "MariaDB",
+    "Meta CAPI",
+    "Cashfree",
+    "PHP",
+    "GitLab CI",
+    "S3 / MinIO",
+    "WeasyPrint",
+    "pdfplumber",
+    "Traefik",
+    "Linux"
+  ]
+}

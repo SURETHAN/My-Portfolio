@@ -4,7 +4,7 @@
     <div class="sec-head">
       <div>
         <p class="mono-label sec-label" data-reveal>
-          <span class="accent">003</span><span class="rule" aria-hidden="true"></span>Timeline
+          Journey<span class="rule" aria-hidden="true"></span>
         </p>
         <h2 class="sec-title"><?= reveal_words('Student to production owner, fast.') ?></h2>
       </div>

@@ -22,9 +22,9 @@ a { color: inherit; text-decoration: none; }
   --text: #09090b;
   --text-secondary: #52525b;
   --text-faint: #a1a1aa;
-  --accent: #2563eb;
-  --accent-soft: rgba(37, 99, 235, 0.10);
-  --accent-glow: rgba(37, 99, 235, 0.22);
+  --accent: #16a34a;
+  --accent-soft: rgba(22, 163, 74, 0.10);
+  --accent-glow: rgba(22, 163, 74, 0.22);
   --live: #059669;
   --hairline: rgba(9, 9, 11, 0.09);
   --hairline-strong: rgba(9, 9, 11, 0.16);
@@ -48,9 +48,9 @@ html.dark {
   --text: #f4f4f5;
   --text-secondary: #a1a1aa;
   --text-faint: #5d5d66;
-  --accent: #3b82f6;
-  --accent-soft: rgba(59, 130, 246, 0.12);
-  --accent-glow: rgba(59, 130, 246, 0.35);
+  --accent: #22c55e;
+  --accent-soft: rgba(34, 197, 94, 0.12);
+  --accent-glow: rgba(34, 197, 94, 0.35);
   --live: #34d399;
   --hairline: rgba(255, 255, 255, 0.08);
   --hairline-strong: rgba(255, 255, 255, 0.16);
@@ -701,19 +701,19 @@ html:not(.dark) .theme-toggle .tt-sun { transform: translateY(0) rotate(0); opac
 }
 @media (min-width: 640px) { .skill-card { padding: 28px; } }
 .skill-card:hover { border-color: var(--hairline-strong); }
-.sc-top { display: flex; align-items: flex-start; justify-content: space-between; }
-.sc-index { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--text-faint); }
+.sc-head-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .sc-badge {
-  border: 1px solid var(--hairline);
+  flex-shrink: 0;
+  border: 1px solid var(--accent);
   border-radius: 999px;
   padding: 4px 10px;
   font-family: var(--font-mono);
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--text-secondary);
+  color: var(--accent);
 }
-.sc-title { margin-top: 20px; font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.01em; }
+.sc-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.01em; }
 .sc-blurb { margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
 .chiplist { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
 .skill-card:hover .chip { border-color: var(--hairline-strong); }
@@ -928,12 +928,10 @@ html:not(.js) .tl-spine-fill { transform: scaleY(1); }
 .b-tech .chip { padding: 4px 10px; font-size: 11px; }
 
 /* ---------- Testimonials ---------- */
-.quotes-strip { padding-block: 8px; }
-.quotes-strip .marquee-track { --marquee-duration: 38s; }
+.quotes-grid { display: grid; gap: 16px; align-items: stretch; }
+@media (min-width: 640px)  { .quotes-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .quotes-grid { grid-template-columns: repeat(3, 1fr); } }
 .q-card {
-  width: 21rem;
-  flex-shrink: 0;
-  margin-inline: 10px;
   border-radius: 16px;
   border: 1px solid var(--hairline);
   background: var(--surface);
@@ -1043,6 +1041,32 @@ html:not(.js) .tl-spine-fill { transform: scaleY(1); }
 .flash--success { border-color: color-mix(in srgb, var(--live) 35%, transparent); background: color-mix(in srgb, var(--live) 8%, transparent); color: var(--live); }
 .flash--error { border-color: color-mix(in srgb, #dc2626 40%, transparent); background: color-mix(in srgb, #dc2626 8%, transparent); color: #ef6a6a; }
 html:not(.dark) .flash--error { color: #b91c1c; }
+
+/* ---------- Customer feedback page (private, unlinked) ---------- */
+.fb-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.fb-card {
+  width: 100%;
+  max-width: 620px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+}
+.fb-title {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.fb-sub { margin-block: 14px 28px; font-size: 14px; line-height: 1.65; color: var(--text-secondary); }
+.fb-card .flash { margin-bottom: 20px; }
 
 /* ---------- Footer ---------- */
 .site-footer { border-top: 1px solid var(--hairline); }

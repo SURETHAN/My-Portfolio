@@ -8,7 +8,7 @@ $others    = array_values(array_filter($projects, fn ($p) => !$p['flagship']));
     <div class="sec-head">
       <div>
         <p class="mono-label sec-label" data-reveal>
-          <span class="accent">004</span><span class="rule" aria-hidden="true"></span>Shipped
+          Selected work<span class="rule" aria-hidden="true"></span>
         </p>
         <h2 class="sec-title"><?= reveal_words('Proof, running in production.') ?></h2>
       </div>

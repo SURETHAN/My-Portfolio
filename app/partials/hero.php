@@ -17,7 +17,6 @@
     </h1>
 
     <p class="hero-role fx-fade" data-hero="role">
-      <span class="accent" aria-hidden="true">//</span>
       <span class="visually-hidden">Roles: <?= e(implode(', ', $identity['roles'])) ?></span>
       <span class="role-mask" aria-hidden="true"><span class="role-word" id="role-word"><?= e($identity['roles'][0]) ?></span></span>
     </p>
