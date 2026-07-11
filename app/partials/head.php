@@ -62,6 +62,16 @@
 <script type="application/ld+json">
 <?= json_encode([
     '@context' => 'https://schema.org',
+    '@type'    => 'WebSite',
+    'name'     => SITE_NAME,
+    'alternateName' => 'Surethan',
+    'url'      => SITE_URL . '/',
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
+</script>
+
+<script type="application/ld+json">
+<?= json_encode([
+    '@context' => 'https://schema.org',
     '@type'    => 'Person',
     'name'     => SITE_NAME,
     'alternateName' => ['Surethan', 'Surethan S'],
