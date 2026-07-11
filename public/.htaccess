@@ -14,7 +14,7 @@ ServerSignature Off
 
 # Static assets: long cache (URLs are ?v= cache-busted)
 <IfModule mod_headers.c>
-  <FilesMatch "\.(css|js|mjs|woff2|webp|png|svg|jpg)$">
+  <FilesMatch "\.(css|js|mjs|woff2|webp|png|svg|jpg|ico)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
     Header set X-Content-Type-Options "nosniff"
   </FilesMatch>
