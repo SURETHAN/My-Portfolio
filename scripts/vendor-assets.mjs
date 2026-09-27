@@ -19,6 +19,8 @@ const libs = [
   ["node_modules/gsap/dist/ScrollTrigger.min.js", `${VENDOR}/ScrollTrigger.min.js`],
   ["node_modules/lenis/dist/lenis.min.js", `${VENDOR}/lenis.min.js`],
   ["node_modules/three/build/three.module.min.js", `${VENDOR}/three.module.min.js`],
+  // three's module build imports ./three.core.min.js at runtime — must ship together
+  ["node_modules/three/build/three.core.min.js", `${VENDOR}/three.core.min.js`],
 ];
 for (const [src, dst] of libs) {
   await access(src);

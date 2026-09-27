@@ -41,7 +41,7 @@
 
         <div class="c-meta">
           <p class="mono-label">Based in <?= e($identity['location']) ?></p>
-          <p class="mono-label">Open to product engineering &amp; AI integration work</p>
+          <p class="mono-label">Open to product engineering &amp; AI integration engineer work</p>
         </div>
       </div>
 

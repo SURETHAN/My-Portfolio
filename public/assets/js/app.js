@@ -409,32 +409,25 @@ if (FINE) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Hero WebGL scene (lazy module, only while hero is on screen)        */
+/* Site-wide ambient light layer (lazy module, paused when tab hidden) */
 /* ------------------------------------------------------------------ */
 
-(function heroScene() {
-  const holder = document.getElementById("hero-scene");
+(function sceneLayer() {
+  const holder = document.getElementById("scene-layer");
   if (!holder || REDUCED) return;
   if (navigator.connection?.saveData) return;
 
   let scene = null;
-  let wanted = false;
-
-  const io = new IntersectionObserver(([entry]) => {
-    wanted = entry.isIntersecting;
-    if (wanted && !scene) {
-      onIntro(async () => {
-        if (!wanted || scene) return;
-        try {
-          const mod = await import("./hero-scene.js");
-          scene = mod.mount(holder, { dark: doc.classList.contains("dark") });
-          themeListeners.push((dark) => scene?.setTheme(dark));
-        } catch { /* WebGL unavailable — gradient backdrop stays */ }
+  onIntro(async () => {
+    try {
+      const mod = await import(`./hero-scene.js?v=${holder.dataset.v || "1"}`);
+      scene = mod.mount(holder, { dark: doc.classList.contains("dark") });
+      themeListeners.push((dark) => scene?.setTheme(dark));
+      document.addEventListener("visibilitychange", () => {
+        scene?.[document.hidden ? "pause" : "resume"]();
       });
-    }
-    scene?.[wanted ? "resume" : "pause"]();
-  }, { rootMargin: "120px 0px" });
-  io.observe(holder);
+    } catch { /* WebGL unavailable — static backdrop stays */ }
+  });
 })();
 
 /* ------------------------------------------------------------------ */

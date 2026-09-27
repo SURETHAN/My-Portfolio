@@ -1,9 +1,6 @@
 <?php if (!defined('APP_BOOT')) { http_response_code(403); exit; } ?>
 <section class="hero ambient" id="top" aria-label="Introduction">
   <div class="hero-gridlines" aria-hidden="true"></div>
-  <div class="hero-scene" id="hero-scene" aria-hidden="true">
-    <div class="hero-floor"></div>
-  </div>
 
   <div class="container-line hero-main" id="hero-main">
     <p class="hero-status glass fx-fade" data-hero="chip">

@@ -49,9 +49,11 @@
 })();
 </script>
 
-<link rel="preload" href="<?= e(asset('assets/fonts/space-grotesk-3.woff2')) ?>" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="<?= e(asset('assets/fonts/inter-0.woff2')) ?>" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="<?= e(asset('assets/fonts/jetbrains-mono-1.woff2')) ?>" as="font" type="font/woff2" crossorigin>
+<?php /* Bare paths (no ?v=) — must byte-match the URLs inside fonts.css
+         or the browser treats them as different resources and double-loads */ ?>
+<link rel="preload" href="/assets/fonts/space-grotesk-3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-0.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/jetbrains-mono-1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="<?= e(asset('assets/css/fonts.css')) ?>">
 <link rel="stylesheet" href="<?= e(asset('assets/css/main.css')) ?>">
 

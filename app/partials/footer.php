@@ -13,6 +13,11 @@
   </div>
 </footer>
 
+<?php /* Site-wide ambient light layer — fixed behind ALL content.
+         data-v busts the immutable JS cache when the scene module changes */ ?>
+<div class="scene-layer" id="scene-layer" aria-hidden="true"
+     data-v="<?= e((string) (@filemtime(dirname(__DIR__, 2) . '/public/assets/js/hero-scene.js') ?: 1)) ?>"></div>
+
 <div class="cursor-layer" aria-hidden="true">
   <div class="cursor-dot" id="cursor-dot"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
