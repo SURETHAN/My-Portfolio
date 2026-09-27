@@ -26,7 +26,10 @@
         "DocTypes & lifecycle hooks",
         "Whitelisted APIs",
         "Background jobs & schedulers",
-        "Patches & fixtures"
+        "Patches & fixtures",
+        "Concurrency control & idempotency",
+        "MariaDB row locking",
+        "HRMS v16"
       ],
       "featured": true
     },
@@ -53,7 +56,8 @@
         "jQuery / CoreUI",
         "PHP (custom MVC)",
         "SASS / Grunt",
-        "Microsoft Clarity"
+        "Microsoft Clarity",
+        "Vue 3 + frappe-ui"
       ],
       "featured": false
     },
@@ -66,7 +70,12 @@
         "Cashfree / PhonePe payments",
         "Zenvoice SIP telephony",
         "Discord REST API",
-        "Telegram integrations"
+        "Telegram integrations",
+        "WhatsApp messaging",
+        "TeleCMI",
+        "Tailscale API",
+        "Signed webhooks",
+        "Consent-gated tracking (GDPR opt-in)"
       ],
       "featured": false
     },
@@ -102,6 +111,10 @@
     "WeasyPrint",
     "pdfplumber",
     "Traefik",
-    "Linux"
+    "Linux",
+    "WhatsApp",
+    "Tailscale",
+    "Vue",
+    "HRMS"
   ]
 }

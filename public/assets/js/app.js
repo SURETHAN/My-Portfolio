@@ -193,7 +193,7 @@ if (hasGsap && !REDUCED) {
       v: target,
       duration: 1.8,
       scrollTrigger: { trigger: el, start: "top 88%", once: true },
-      onUpdate() { el.textContent = Math.round(state.v) + suffix; },
+      onUpdate() { el.textContent = Math.round(state.v).toLocaleString("en-IN") + suffix; },
     });
   });
 

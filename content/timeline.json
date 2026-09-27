@@ -28,7 +28,7 @@
     "title": "Product Developer",
     "org": "Selfmade Ninja Academy",
     "place": "Bengaluru",
-    "body": "Became the largest contributor to the academy's core ERP app (136 of 230 commits), sole author of the Syllabi AI pipeline, and builder of the AI voice lead-qualification system — all live in production.",
+    "body": "Largest contributor to the academy's core ERP (315 of 596 commits) and its sales CRM (180 of 473). Lead author of the All-Access subscription platform, the Referral Credit Ledger and the Cloud CRM behind Selfmade Cloud; creator of Syllabi AI, the syllabus-to-lesson pipeline behind LearnAI; owner of the AI voice lead-qualification system; and one of three engineers on Sponge Collaborative's company ERP — 350+ merged pull requests, all running in production.",
     "tag": "CURRENT"
   }
 ]

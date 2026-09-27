@@ -44,7 +44,7 @@
           <?php foreach ($about['stats'] as $stat): ?>
             <div class="stat">
               <dd class="stat-num">
-                <span data-counter="<?= e((string) $stat['value']) ?>" data-suffix="<?= e($stat['suffix']) ?>"><?= e((string) $stat['value'] . $stat['suffix']) ?></span>
+                <span data-counter="<?= e((string) $stat['value']) ?>" data-suffix="<?= e($stat['suffix']) ?>"><?= e(number_format((float) $stat['value']) . $stat['suffix']) ?></span>
               </dd>
               <dt class="stat-label"><?= e($stat['label']) ?></dt>
             </div>

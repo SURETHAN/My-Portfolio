@@ -72,7 +72,7 @@ return [
         'company'   => 'Selfmade Ninja Academy',
         'email'     => 'surethan37@gmail.com',
         'linkedin'  => 'https://www.linkedin.com/in/surethan-s-3865bb385/',
-        'github'    => '', // [ADD GITHUB PROFILE URL]
+        'github'    => 'https://github.com/SURETHAN',
         'coords'    => '12.9716°N / 77.5946°E',
     ],
 

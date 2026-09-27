@@ -13,7 +13,7 @@ $others    = array_values(array_filter($projects, fn ($p) => !$p['flagship']));
         <h2 class="sec-title"><?= reveal_words('Proof, running in production.') ?></h2>
       </div>
       <p class="sec-aside" data-reveal>
-        Everything here is deployed and in daily use at Selfmade Ninja Academy. The work repos are private, so each case stands on its architecture and outcomes.
+        Everything here is deployed and in daily use — at Selfmade Ninja Academy and Sponge Collaborative. The work repos are private, so each case stands on its architecture and outcomes.
       </p>
     </div>
 
@@ -25,7 +25,7 @@ $others    = array_values(array_filter($projects, fn ($p) => !$p['flagship']));
             <div class="fs-grid">
               <div>
                 <p class="fs-meta">
-                  <span class="fs-index">CASE/<?= e($project['index']) ?></span>
+                  <span class="fs-index">Case study</span>
                   <?php if ($project['liveLabel'] !== ''): ?>
                     <span class="fs-live"><span class="live-dot" aria-hidden="true"></span><?= e($project['liveLabel']) ?></span>
                   <?php endif; ?>
@@ -77,7 +77,7 @@ $others    = array_values(array_filter($projects, fn ($p) => !$p['flagship']));
           <div class="tilt" data-tilt>
             <article class="b-card" aria-labelledby="b-<?= e($project['id']) ?>">
               <div class="b-top">
-                <span class="b-index">CASE/<?= e($project['index']) ?></span>
+                <span class="b-index"><?= e($project['liveLabel'] !== '' ? 'In production' : 'Case study') ?></span>
                 <?php if ($project['liveUrl'] !== ''): ?>
                   <a class="b-arrow" href="<?= e($project['liveUrl']) ?>" target="_blank" rel="noopener noreferrer" aria-label="Open <?= e($project['name']) ?> live site" data-cursor><?= icon('diag') ?></a>
                 <?php else: ?>

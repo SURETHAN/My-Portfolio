@@ -1,63 +1,317 @@
 [
   {
-    "id": "syllabi-ai",
+    "id": "subscription",
     "index": "001",
-    "name": "Syllabi AI",
-    "kicker": "Syllabus PDF → living learning platform",
-    "summary": "An admin drops in a university syllabus PDF; five specialized LLM agents parse it into a structured hierarchy — campus to department to course to unit — and every student can generate an AI lesson from any unit in one click.",
-    "role": "Sole author, end-to-end — backend AI pipeline + web frontend. ~60 commits, +10k lines.",
+    "name": "All-Access Subscription Platform",
+    "kicker": "The whole catalog on one plan — trial, mandate, quota",
+    "summary": "A new subscription module inside the academy Portal: a one-time 7-day free trial, UPI AutoPay mandate billing with KYC, weekly watch-hour quotas, sequential video unlocking, and an exam-centre gate deciding who earns a certificate. First commit to production in 8 days — then a 19-bug correctness campaign to make every edge exact.",
+    "role": "Feature lead, end-to-end across the ERP and both student dashboards — 73 commits in the subscription core, followed by a ~24-PR hardening campaign after launch.",
     "impact": [
-      "Parses multi-hundred-page syllabi into structured courses & units in minutes",
-      "Serves the academy's entire student base at labs.selfmade.ninja",
-      "SHA-256 file-hash dedup returns cached parses — tokens are never burned twice",
-      "OCR fallback (pytesseract + pdf2image) rescues scanned PDFs",
-      "Auto-detects link-index PDFs and switches to flat mode — fetches every Google Drive doc asynchronously",
-      "Error recovery never destroys old data until a re-parse succeeds"
+      "Live on a platform of 5,400+ students — from free trial through UPI AutoPay renewals",
+      "Trial runs an exact 7×24 hours from the signup instant, one time per student",
+      "UPI AutoPay mandates via Cashfree with KYC at enrollment — ended trials' mandates are cancelled before they can ever debit",
+      "Weekly watch-hour quota anchored on the instant access was granted, with per-session watch history a student can audit",
+      "Sequential video unlocking that cannot be spoofed from the client — every playback OTP gated server-side",
+      "Watch-hour flushes classify real production failures and retry transient ones from a savepoint — a student's buffer is never lost"
     ],
-    "tech": ["Python 3.12", "OpenAI Agents SDK", "Pydantic", "MongoDB", "RabbitMQ", "pdfplumber", "PyMuPDF", "aiohttp", "PHP", "CoreUI"],
-    "liveLabel": "labs.selfmade.ninja/syllabus",
-    "liveUrl": "https://labs.selfmade.ninja/syllabus",
+    "tech": [
+      "Python",
+      "Frappe",
+      "Cashfree UPI AutoPay",
+      "VdoCipher DRM",
+      "MariaDB",
+      "PHP",
+      "Meta CAPI"
+    ],
+    "liveLabel": "selfmade.ninja/payment/subscribe",
+    "liveUrl": "https://selfmade.ninja/payment/subscribe",
     "flagship": true,
     "architecture": [
-      { "label": "INGEST",    "detail": "PDF upload · mime/size guard · SHA-256 dedup → HTTP 409" },
-      { "label": "EXTRACT",   "detail": "pdfplumber → OCR fallback · hyperlink harvest via PyMuPDF" },
-      { "label": "AGENTS ×5", "detail": "Syllabus · FlatSyllabus · Unit · WebUnit · Lab — Pydantic contracts" },
-      { "label": "NORMALIZE", "detail": "1NF tree → per-university MongoDB collections · deterministic IDs" },
-      { "label": "SERVE",     "detail": "RabbitMQ daemon · bell notifications · LearnAI lesson deep-links" }
+      {
+        "label": "CHECKOUT",
+        "detail": "plan pricing · ex-GST offer + GST · coupons · split-checkout autopay"
+      },
+      {
+        "label": "MANDATE",
+        "detail": "Cashfree UPI AutoPay · KYC gate at enrollment · ended-trial mandate cancel"
+      },
+      {
+        "label": "TRIAL",
+        "detail": "exact 7×24h · Trial Ended sweep · per-course availability · content cap"
+      },
+      {
+        "label": "ACCESS",
+        "detail": "sequential unlock keyed by content · server-side playback OTP gate"
+      },
+      {
+        "label": "METER",
+        "detail": "weekly quota from the access instant · festival multipliers · top-up lots"
+      }
+    ],
+    "span": ""
+  },
+  {
+    "id": "referral-credits",
+    "index": "002",
+    "name": "Referral Credit Ledger",
+    "kicker": "Earn, spend and send credits — exact under concurrency",
+    "summary": "One credit ledger replacing the academy's old points scheme. Students earn credits only from money that actually settled, spend them on watch passes, subscriptions and course instalments, and send them to friends by referral code — built to stay exact under replayed webhooks, racing workers and simultaneous transfers.",
+    "role": "Sole author across the ERP and both student dashboards — 13 merged PRs, 1,100+ automated tests.",
+    "impact": [
+      "Launched 26 Sep 2026 — 3,600+ students credited on day one through an idempotent backfill of past purchases",
+      "Insert-once ledger with a unique dedupe key plus an hourly reconcile sweep — every settlement lands on exactly one row",
+      "Peer-to-peer transfers lock both wallets in a fixed order with idempotency keys and jittered deadlock retry — 48/48 clean under concurrent stress",
+      "Two-level referral rewards plus workshop and trial earnings — refunds and rollbacks claw credits back automatically",
+      "Per-product spend caps, up to 100% on premium courses, enforced under a per-student wallet lock with holds and debts",
+      "Red-team concurrency and security suites; every rule sits behind a Desk kill switch"
+    ],
+    "tech": [
+      "Python",
+      "Frappe",
+      "MariaDB row locks",
+      "Background jobs",
+      "PHP",
+      "JavaScript"
+    ],
+    "liveLabel": "selfmade.ninja · student wallet",
+    "liveUrl": "",
+    "flagship": true,
+    "architecture": [
+      {
+        "label": "EARN",
+        "detail": "settled payments only · two-level referral · workshop + trial earnings"
+      },
+      {
+        "label": "LEDGER",
+        "detail": "insert-once rows · unique dedupe key · hourly reconcile sweep"
+      },
+      {
+        "label": "SPEND",
+        "detail": "per-student wallet lock · holds, debts, returns · per-product caps"
+      },
+      {
+        "label": "SEND",
+        "detail": "transfer by referral code · ordered wallet locks · idempotency keys"
+      },
+      {
+        "label": "GOVERN",
+        "detail": "refund clawback · Desk kill switches · staff-only reversal"
+      }
     ],
     "span": ""
   },
   {
     "id": "ai-voice",
-    "index": "002",
+    "index": "003",
     "name": "AI Voice Lead Qualification",
     "kicker": "Every new lead, called by AI within seconds",
-    "summary": "A new sales lead lands in the CRM and an AI voice agent calls them back within seconds, interviews them in Tamil-English, extracts a structured qualification profile from the transcript, routes hot leads to humans and schedules everyone else — autonomously.",
-    "role": "Feature author, end-to-end. ~15 feature commits + 67 automated tests. Python / Frappe.",
+    "summary": "A new sales lead lands in the CRM and an AI voice agent calls them within seconds, interviews them in Tamil-English, captures a structured qualification profile live during the call and routes hot leads to humans — then hands its verdict to Meta so the ads optimise on it.",
+    "role": "Feature author and owner, end-to-end — 70+ commits, ~460 automated tests. Python / Frappe.",
     "impact": [
-      "Qualifies leads as Hot / Warm / Cold / Callback with 11 structured profile fields",
-      "Trunk-capacity guard defers overflow calls instead of burning SIP rejects — deadlock-proof by design",
-      "Polling state machine survives vocabulary drift, dropped calls and full outages",
-      "Retries land inside configured calling windows — a 10 p.m. signup gets called 10:30 a.m. next day",
-      "Writes via low-level field updates so it can never trigger CRM validations or Meta CAPI side effects",
-      "67 tests prove the AI can never break the human sales workflow"
+      "6,900+ AI calls placed to 1,300+ leads since July 2026",
+      "Six verdicts — Hot, Warm, Cold, Callback, Disqualified, Incomplete — with 11 structured profile fields",
+      "The assistant reports the qualification itself mid-call, and a signed end-of-call webhook resolves each call instantly — polling stays as the fallback",
+      "Found and removed a lock-ordering race that double-dialled leads — one lead, one call",
+      "Outage recovery re-queues every lead from the exact attempt it lost; a nightly no-call window and comment-driven Do-Not-Call keep it courteous",
+      "Meta bids on the AI's same-day verdict — about 4× more optimisation signal than the old sales-status event"
     ],
-    "tech": ["Python", "Frappe", "OpenAI (gpt-4o-mini, temp 0)", "Zenvoice SIP", "JSON mode", "Cron state machine"],
+    "tech": [
+      "Python",
+      "Frappe",
+      "OpenAI (gpt-4o-mini, temp 0)",
+      "Zenvoice",
+      "TeleCMI",
+      "Signed webhooks",
+      "Meta CAPI"
+    ],
     "liveLabel": "crm.selfmade.ninja · internal",
     "liveUrl": "",
     "flagship": true,
     "architecture": [
-      { "label": "TRIGGER", "detail": "after_insert hook — hardened so failure can't roll back lead creation" },
-      { "label": "DIAL",    "detail": "Zenvoice client · dual auth · trunk-capacity guard + stale-call cutoff" },
-      { "label": "POLL",    "detail": "5-min cron state machine · status vocabulary normalization" },
-      { "label": "EXTRACT", "detail": "gpt-4o-mini at temperature 0 · noise-tolerant multilingual prompt · per-question Q&A rows" },
-      { "label": "ROUTE",   "detail": "Hot → human sales · callbacks honor requested slots · retry caps" }
+      {
+        "label": "TRIGGER",
+        "detail": "after_insert hook · returning-lead check · no-call window · Do-Not-Call"
+      },
+      {
+        "label": "DIAL",
+        "detail": "Zenvoice REST · channel reservation · one-lead-one-call locking"
+      },
+      {
+        "label": "CAPTURE",
+        "detail": "live tool-call qualification · signed end-of-call webhook · poll fallback"
+      },
+      {
+        "label": "EXTRACT",
+        "detail": "gpt-4o-mini at temperature 0 · 11 profile fields · six verdicts"
+      },
+      {
+        "label": "ROUTE",
+        "detail": "Hot → human sales · callbacks honor requested slots · verdict → Meta CAPI"
+      }
+    ],
+    "span": ""
+  },
+  {
+    "id": "cloud-crm",
+    "index": "004",
+    "name": "Cloud CRM",
+    "kicker": "A new product's revenue pipeline — website to sales desk",
+    "summary": "When the academy launched Selfmade Cloud, I built its customer pipeline across three codebases: a consent-gated Meta pixel on selfmade.work, an idempotent milestone relay in the ERP, and a complete CRM that turns every signup, trial and top-up into a lead sales can work — with AI calls, WhatsApp and ad attribution built in.",
+    "role": "Lead author across 3 repositories — shipped in 9 independently deployable phases from a written spec, 160+ automated tests.",
+    "impact": [
+      "Live on selfmade.work since 26 Sep 2026",
+      "Lead stage derived from ~24 event types by 10 rules — events arriving out of order can never move a lead backwards",
+      "ERP outbox keyed on each milestone's natural key — recording an event twice is a no-op",
+      "Tracking fires only with consent — explicit opt-in for EU/EEA/UK visitors, asked again whenever the privacy policy changes",
+      "Deterministic SHA-256 event IDs dedupe browser and server sends; failed sends retry with backoff",
+      "28-day ad attribution with full history, three Meta audiences synced daily, and AI calls from a per-country assistant"
+    ],
+    "tech": [
+      "Python",
+      "Frappe",
+      "PHP",
+      "JavaScript",
+      "Meta Pixel + CAPI",
+      "Consent management"
+    ],
+    "liveLabel": "selfmade.work",
+    "liveUrl": "https://selfmade.work",
+    "flagship": true,
+    "architecture": [
+      {
+        "label": "CONSENT",
+        "detail": "banner tied to the policy version · ad click IDs in both Meta URL layouts"
+      },
+      {
+        "label": "RELAY",
+        "detail": "ERP outbox on natural keys · consent + attribution snapshots"
+      },
+      {
+        "label": "STAGE",
+        "detail": "~24 event types → 10 rules · monotonic, order-independent"
+      },
+      {
+        "label": "WORK",
+        "detail": "7 DocTypes · Kanban board · 3 reports · AI calls + WhatsApp"
+      },
+      {
+        "label": "MEASURE",
+        "detail": "7 standard + 17 custom Meta events · 3 synced audiences"
+      }
+    ],
+    "span": ""
+  },
+  {
+    "id": "sponge-erp",
+    "index": "005",
+    "name": "Sponge Collaborative ERP",
+    "kicker": "A whole company's operations on one platform",
+    "summary": "The company platform for Sponge Collaborative, built on Frappe v16, ERPNext and HRMS with a Vue 3 app for the team: projects planned on a Gantt chart down to stages, activities and deliverables; a task kanban and timesheets; attendance, leave, holidays and expenses; handbook, policies, offer letters and payslips; partner financial dashboards; and a Tailscale-secured private network — self-hosted end to end.",
+    "role": "One of three engineers on the platform — 61 commits and 19 merged PRs of my own, all live in production: employee exit, VPN enrollment, working-day rules, leave accrual, shift reminders, bulk expense payments and project visibility.",
+    "impact": [
+      "Projects on a Gantt chart — stages, activities and numbered deliverables, with dates rolled up from their children",
+      "HR in one place: shift check-in reminders, an 8 PM auto-checkout, a weekly timesheet digest and leave balances that accrue through the year",
+      "Partner financials in Frappe Insights — project P&L, salary allocation and overhead that tie out to the Desk finance reports",
+      "Private by default: the portal sits behind Tailscale, with device enrollment and an employee-exit flow that proves access was revoked",
+      "Bulk Expense Claim payment — one Payment Entry per group, and a failed group rolls back alone",
+      "Self-hosted: Docker on a KVM virtual machine, images built on staging and pinned by digest, backups to S3-compatible storage"
+    ],
+    "tech": [
+      "Frappe v16",
+      "ERPNext",
+      "HRMS",
+      "Vue 3 + frappe-ui",
+      "Frappe Insights",
+      "Tailscale API",
+      "Docker",
+      "Playwright"
+    ],
+    "liveLabel": "Internal · in production",
+    "liveUrl": "",
+    "flagship": true,
+    "architecture": [
+      {
+        "label": "PLAN",
+        "detail": "projects · Gantt stages, activities, deliverables · task kanban · timesheets"
+      },
+      {
+        "label": "PEOPLE",
+        "detail": "attendance + shift reminders · leave accrual · holidays · expenses · onboarding + exit"
+      },
+      {
+        "label": "DOCS",
+        "detail": "handbook · policies + acknowledgement · offer letters · payslips"
+      },
+      {
+        "label": "FINANCE",
+        "detail": "project P&L · salary allocation · company overhead · Insights dashboards"
+      },
+      {
+        "label": "ACCESS",
+        "detail": "Tailscale enrollment + device registry · role permissions · self-hosted Docker"
+      }
+    ],
+    "span": ""
+  },
+  {
+    "id": "syllabi-ai",
+    "index": "006",
+    "name": "Syllabi AI → LearnAI",
+    "kicker": "A university syllabus PDF becomes a personal AI course, with hands-on labs",
+    "summary": "Syllabi AI turns a university curriculum PDF into a browsable tree — programme and regulation down to courses and units — on labs.selfmade.ninja. From any unit, a student opens LearnAI, the platform's AI tutor, pre-filled with that unit's topics: it writes a module-and-chapter lesson grounded in the syllabus, streams each chapter live, recommends hands-on cloud labs, and answers questions through a chat tutor that can run commands inside the student's own lab.",
+    "role": "Designed and built Syllabi AI v1 end to end — the agentic parsing backend and the web UI, 35 commits and ~9k lines — plus LearnAI's lab-recommendation agents. Most of today's parser code is still mine; the wider team built LearnAI's core and extended the syllabus module.",
+    "impact": [
+      "Five specialized agents with Pydantic-typed outputs — syllabus, flat-syllabus, unit, web-unit and lab-experiment extraction",
+      "Scanned PDFs rescued by an OCR fallback; link-index syllabi switch to flat mode and fetch every matched Google Drive document concurrently",
+      "SHA-256 file dedup plus a campus + programme + regulation check — a syllabus is never parsed, or paid for, twice",
+      "Deterministic IDs make every re-parse an upsert, and old data is kept until a new parse actually produces courses",
+      "Built for real curricula — three syllabi alone yielded 296 courses and 1,556 units",
+      "LearnAI lessons carry the unit, its sibling units and related lessons as context, stream chapter by chapter, and link back to the syllabus"
+    ],
+    "tech": [
+      "Python",
+      "OpenAI Agents SDK",
+      "Pydantic",
+      "gpt-4.1-mini",
+      "pdfplumber",
+      "PyMuPDF",
+      "OCR (pytesseract)",
+      "aiohttp",
+      "MongoDB",
+      "RabbitMQ + STOMP",
+      "PHP",
+      "CoreUI"
+    ],
+    "liveLabel": "labs.selfmade.ninja/syllabus",
+    "liveUrl": "https://labs.selfmade.ninja/syllabus",
+    "flagship": true,
+    "architecture": [
+      {
+        "label": "INGEST",
+        "detail": "admin upload or student request · PDF + 10 MB guard · SHA-256 dedup → HTTP 409"
+      },
+      {
+        "label": "EXTRACT",
+        "detail": "pdfplumber → OCR fallback · PyMuPDF link harvest · flat mode past 10 Drive links"
+      },
+      {
+        "label": "AGENTS ×5",
+        "detail": "Syllabus · FlatSyllabus · Unit · WebUnit · Lab — Pydantic contracts, units + labs in parallel"
+      },
+      {
+        "label": "STORE",
+        "detail": "deterministic IDs · upsert-only re-parse · MongoDB course + unit collections"
+      },
+      {
+        "label": "LEARN",
+        "detail": "LearnAI outline → streamed chapters · lab picks · Ask-AI tutor inside the student's lab"
+      }
     ],
     "span": ""
   },
   {
     "id": "lead-funnel",
-    "index": "003",
+    "index": "007",
     "name": "Lead Funnel + Meta CAPI",
     "kicker": "Top of the paid-acquisition funnel",
     "summary": "Anonymous multi-step eligibility quiz feeding the CRM — with Meta Pixel + Conversions API attribution, browser/server event dedup, ROAS values and full UTM capture. The leads it qualifies are the ones the AI voice agent calls.",
@@ -67,7 +321,13 @@
       "fbc/fbp advanced matching + event-ID dedup between Pixel and CAPI",
       "Host-based domain router serves multiple marketing domains from one Frappe site"
     ],
-    "tech": ["Vanilla JS", "Frappe", "Meta Pixel", "Conversions API", "Microsoft Clarity"],
+    "tech": [
+      "Vanilla JS",
+      "Frappe",
+      "Meta Pixel",
+      "Conversions API",
+      "Microsoft Clarity"
+    ],
     "liveLabel": "leads.selfmade.ninja",
     "liveUrl": "https://leads.selfmade.ninja",
     "flagship": false,
@@ -76,7 +336,7 @@
   },
   {
     "id": "certificates",
-    "index": "004",
+    "index": "008",
     "name": "Certificate Platform",
     "kicker": "Template-driven credential rendering",
     "summary": "Visual position picker with rotation, alignment and word-wrap for laying out dynamic fields on certificate artwork — a clean v3 renderer built alongside the untouched legacy system.",
@@ -86,7 +346,12 @@
       "Campaign-aware delivery emails",
       "Workshop certificates keyed by registration in S3"
     ],
-    "tech": ["Python", "Frappe", "WeasyPrint", "S3"],
+    "tech": [
+      "Python",
+      "Frappe",
+      "WeasyPrint",
+      "S3"
+    ],
     "liveLabel": "",
     "liveUrl": "",
     "flagship": false,
@@ -94,8 +359,58 @@
     "span": ""
   },
   {
+    "id": "payment-integrity",
+    "index": "009",
+    "name": "Payment Integrity & Security",
+    "kicker": "Money booked exactly once",
+    "summary": "Traced a Cashfree order booked twice, 448 ms apart, to a REPEATABLE READ snapshot and fixed it by claiming the transaction with a locking read before booking. Closed a hole where a zero-total fee could mark a course paid for life, and made fee rollbacks reverse their ledger entries.",
+    "role": "Lead author.",
+    "impact": [
+      "Settlement claims the transaction under a row lock before any receipt is built",
+      "A subscription fee must match a paid charge; enrollment rollback is staff-only",
+      "Students can read, but never write, their own payment and credit records"
+    ],
+    "tech": [
+      "Python",
+      "Frappe",
+      "MariaDB",
+      "Cashfree",
+      "Role permissions"
+    ],
+    "liveLabel": "",
+    "liveUrl": "",
+    "flagship": false,
+    "architecture": [],
+    "span": ""
+  },
+  {
+    "id": "assistants",
+    "index": "010",
+    "name": "Conversational AI Assistants",
+    "kicker": "WhatsApp and Telegram, wired into the CRM",
+    "summary": "The CRM side of the academy's WhatsApp sales assistant — one thread per contact, agent takeover, questions asked only when the answer is still unknown, and calls booked by the bot itself — plus Desk controls for the Telegram support bot: prompts, replies, rate and spend caps, key rotation.",
+    "role": "Author of the CRM and portal integrations.",
+    "impact": [
+      "An agent can take any conversation off the bot",
+      "The conversation that produced a lead lands on the lead",
+      "Lead owners are told the moment the bot promises something"
+    ],
+    "tech": [
+      "n8n",
+      "WhatsApp",
+      "Telegram",
+      "Python",
+      "Frappe"
+    ],
+    "liveLabel": "",
+    "liveUrl": "",
+    "flagship": false,
+    "architecture": [],
+    "span": "wide"
+  },
+  {
     "id": "campaigns",
-    "index": "005",
+    "index": "011",
     "name": "Campaigns, Payments & Discord",
     "kicker": "Workshop commerce, end to end",
     "summary": "Ported the recorded-workshop site from standalone Flask into the Frappe monolith: registration → Cashfree order → webhook → auto Sales Invoice → academy access. Discord roles granted automatically on payment.",
@@ -105,29 +420,40 @@
       "Program API v3 — 13 whitelisted endpoints with server-side filter/search/pagination",
       "KYC hardening (replay, race, PII) on a 2,000-line Cashfree module"
     ],
-    "tech": ["Python", "Frappe", "Cashfree", "Discord REST", "Webhooks"],
-    "liveLabel": "",
-    "liveUrl": "",
-    "flagship": false,
-    "architecture": [],
-    "span": ""
-  },
-  {
-    "id": "agents-mcp",
-    "index": "006",
-    "name": "AI Agents, n8n & MCP",
-    "kicker": "Assistants that operate real systems",
-    "summary": "Beyond the flagships: automation agents built with n8n and the OpenAI Agents SDK, and MCP (Model Context Protocol) servers that let LLM assistants drive real infrastructure. [ADD 1–2 CONCRETE n8n / MCP EXAMPLES]",
-    "role": "Builder.",
-    "impact": [
-      "Syllabi AI (001) is the largest Agents-SDK system in production",
-      "MCP servers exposing internal tooling to LLM assistants"
+    "tech": [
+      "Python",
+      "Frappe",
+      "Cashfree",
+      "Discord REST",
+      "Webhooks"
     ],
-    "tech": ["n8n", "OpenAI Agents SDK", "MCP", "Python", "TypeScript"],
     "liveLabel": "",
     "liveUrl": "",
     "flagship": false,
     "architecture": [],
     "span": "wide"
+  },
+  {
+    "id": "trial-analytics",
+    "index": "012",
+    "name": "Trial Cohort Analytics",
+    "kicker": "The funnel report the founders read every Monday",
+    "summary": "A PDF mailed every Monday at 07:00 IST that re-scores eight past trial cohorts — trials convert a median of 11 days after starting — and attributes revenue only to purchases made after each student's own trial began.",
+    "role": "Sole author.",
+    "impact": [
+      "Every buyer in the week is named, not only the trial-led ones",
+      "A video shared across courses is counted once"
+    ],
+    "tech": [
+      "Python",
+      "Frappe",
+      "Scheduled jobs",
+      "PDF reports"
+    ],
+    "liveLabel": "",
+    "liveUrl": "",
+    "flagship": false,
+    "architecture": [],
+    "span": ""
   }
 ]
