@@ -73,8 +73,8 @@ const cx = Math.round(W * 0.492);
       </defs>
       <rect width="1200" height="630" fill="url(#g)"/>
       <text x="72" y="470" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="700" fill="#f4f4f5" letter-spacing="-2">SURETHAN S</text>
-      <text x="72" y="530" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#a1a1aa">Product Developer · Frappe/ERPNext · AI Integrations</text>
-      <text x="72" y="576" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#3b82f6">I ship production AI — not demos.</text>
+      <text x="72" y="530" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#a1a1aa">Product Engineer · AI Engineer · Frappe/ERPNext</text>
+      <text x="72" y="576" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#22c55e">I ship production AI — not demos.</text>
       <circle cx="86" cy="120" r="7" fill="#34d399"/>
       <text x="108" y="128" font-family="monospace" font-size="22" fill="#34d399" letter-spacing="3">LIVE IN PRODUCTION</text>
     </svg>`);

@@ -65,7 +65,7 @@ return [
         'name'      => 'Surethan S',
         'nameMain'  => 'SURETHAN',
         'nameTail'  => 'S',
-        'roles'     => ['AI Systems Engineer', 'Product Engineer', 'Prompt Engineer', 'Platform Engineer — Frappe/ERPNext', 'MCP & Agent Developer'],
+        'roles'     => ['Product Engineer', 'AI Engineer', 'Prompt Engineer', 'Platform Engineer — Frappe/ERPNext', 'MCP & Agent Developer'],
         'tagline'   => 'I ship production AI — not demos.',
         'subline'   => 'Voice agents that qualify every sales lead. Multi-agent pipelines that turn university syllabi into living learning platforms. All deployed, all in daily use.',
         'location'  => 'Bengaluru, India',
@@ -80,7 +80,7 @@ return [
         'heading' => 'From lecture halls to production logs.',
         'aside'   => 'Three years into a five-year degree, the pull of real users beat the pull of a diploma.',
         'paragraphs' => [
-            "I'm a product developer at Selfmade Ninja Academy in Bengaluru — a tech academy and cloud-labs platform teaching programming, Linux and cybersecurity, with its whole business running on Frappe/ERPNext.",
+            "I'm a product engineer and AI engineer at Selfmade Ninja Academy in Bengaluru — a tech academy and cloud-labs platform teaching programming, Linux and cybersecurity, with its whole business running on Frappe/ERPNext.",
             'I finished school in Erode, joined the 5-year integrated M.Sc. Software Systems programme at Kongu Engineering College — and after three years, left to build products full-time. Months later, my code was qualifying every sales lead the academy gets and generating lessons for thousands of learners.',
             "My discipline is production-grade AI engineering: prompt systems that hold up against noisy real-world speech, data pipelines that fail safely without losing a record, telephony that never deadlocks, and attribution that ad platforms verify and trust.",
         ],

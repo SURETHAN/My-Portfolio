@@ -12,8 +12,8 @@ if (!defined('APP_BOOT')) {
 /* ------------------------------------------------------------------ */
 
 const SITE_NAME   = 'Surethan S';
-const SITE_TITLE  = 'Surethan S — Product Developer · AI Engineer';
-const SITE_DESC   = 'Product developer at Selfmade Ninja Academy, Bengaluru. Ships production AI end-to-end: an autonomous voice agent that qualifies every sales lead, and a 5-agent LLM pipeline turning university syllabi into learning platforms.';
+const SITE_TITLE  = 'Surethan S — Product Engineer & AI Engineer';
+const SITE_DESC   = 'Surethan S is a Product Engineer and AI Engineer at Selfmade Ninja Academy, Bengaluru, shipping production AI voice agents, payments and LLM pipelines.';
 const SITE_URL    = 'https://surethan.zeal.ninja';
 const CONTACT_TO  = 'surethan37@gmail.com';
 

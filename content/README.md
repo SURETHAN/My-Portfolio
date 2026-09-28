@@ -191,7 +191,7 @@ jq '. + [{"period": "2027 — Present", "title": "Role", "org": "Company",
   "place": "City", "body": "What you built.", "tag": "CURRENT"}]' \
   content/timeline.json > /tmp/j && mv /tmp/j content/timeline.json
 # clear CURRENT from the previous entry (match its title)
-jq '(.[] | select(.title == "Product Developer") | .tag) = ""' content/timeline.json > /tmp/j && mv /tmp/j content/timeline.json
+jq '(.[] | select(.title == "Product Engineer") | .tag) = ""' content/timeline.json > /tmp/j && mv /tmp/j content/timeline.json
 
 # ---- Projects --------------------------------------------------------
 jq '. + [{"id": "my-project", "index": "007", "name": "My Project",

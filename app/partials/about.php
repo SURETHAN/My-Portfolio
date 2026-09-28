@@ -29,7 +29,7 @@
         </figure>
         <div class="fact-chip glass" data-reveal>
           <p class="fc-k">Currently</p>
-          <p class="fc-v">Product Dev <span class="accent">@</span> Selfmade Ninja</p>
+          <p class="fc-v">Product Engineer <span class="accent">@</span> Selfmade Ninja</p>
         </div>
       </div>
 

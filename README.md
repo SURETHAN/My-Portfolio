@@ -1,6 +1,6 @@
 # Surethan S — Portfolio
 
-Cinematic dark-first portfolio for **Surethan S** — Product Developer · Frappe/ERPNext · AI Integrations.
+Cinematic dark-first portfolio for **Surethan S** — Product Engineer · AI Engineer · Frappe/ERPNext.
 Live at **[surethan.zeal.ninja](https://surethan.zeal.ninja)**.
 
 Pure **PHP 8 + vanilla JS** — no frontend framework, no build step at runtime, no third-party
